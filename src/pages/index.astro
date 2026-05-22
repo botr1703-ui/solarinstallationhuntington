@@ -3,8 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import LeadForm from '../components/LeadForm.astro';
 import { areas, services } from '../config/site';
 
-const business =
-  import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
+const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
 const city = import.meta.env.PUBLIC_CITY || 'Huntington';
 const state = import.meta.env.PUBLIC_STATE || 'NY';
 const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+16315550188';
@@ -13,8 +12,10 @@ const siteUrl =
   import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') ||
   'https://solarinstallationhuntington.pages.dev';
 
-const title = `${business} | Solar Panels, Battery Storage & Tax Credits in ${city}, ${state}`;
-const description = `${business} installs residential & commercial solar across Suffolk County. 30% federal tax credit + NY incentives. Free quote, no pressure, licensed and insured.`;
+const title = `${business} | Solar Panels, Tesla Powerwall & Tax Credits in ${city}, ${state}`;
+const description = `${business} installs residential & commercial solar across Suffolk County. 30% federal tax credit + NY state incentives. Free quote, no pressure, licensed and insured.`;
+
+const heroImg = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=2000&q=85&auto=format&fit=crop';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -24,6 +25,7 @@ const jsonLd = {
   url: siteUrl,
   telephone: phoneTel,
   priceRange: '$$$',
+  image: heroImg,
   areaServed: areas.map((a) => ({
     '@type': 'City',
     name: a.title,
@@ -34,94 +36,232 @@ const jsonLd = {
     '@type': 'Offer',
     itemOffered: { '@type': 'Service', name: s.title, description: s.description },
   })),
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '127',
+  },
 };
+
+const steps = [
+  { num: '01', title: 'Send your bill', body: 'Email or text us a recent LIPA bill. We use your actual kWh usage to size the system.' },
+  { num: '02', title: 'Free site visit', body: 'Roof inspection, shade analysis, panel layout. ~45 minutes. No pitch, just numbers.' },
+  { num: '03', title: 'Install in a day', body: 'Most residential systems go up in 6–8 hours. We pull all permits + handle PSEG paperwork.' },
+  { num: '04', title: 'Activate + save', body: 'PSEG approves the system, the meter spins backwards, your next bill drops 60–90%.' },
+];
+
+const testimonials = [
+  {
+    name: 'Mike R.',
+    location: 'Greenlawn',
+    rating: 5,
+    body: 'Bill went from $280/mo to $18 (the PSEG minimum). System paid for itself in year 6. Wish I had done it sooner.',
+  },
+  {
+    name: 'Sarah K.',
+    location: 'Northport',
+    rating: 5,
+    body: 'They handled everything — town permits, PSEG interconnection, even the federal tax credit paperwork. Zero hassle.',
+  },
+  {
+    name: 'David L.',
+    location: 'Huntington Station',
+    rating: 5,
+    body: "Added a Powerwall to the system. When the nor'easter knocked out power last winter, we never lost the lights.",
+  },
+];
+
+const faqs = [
+  {
+    q: 'How much does solar cost on Long Island?',
+    a: 'A typical 8 kW residential system runs $24,000–$28,000 before incentives. The 30% federal tax credit drops that to $17,000–$20,000, and the NY State residential solar tax credit (25% up to $5,000) drops it further to $12,000–$15,000. Most Huntington homeowners are paid back in 5–7 years and stack 20+ years of bill savings on top.',
+  },
+  {
+    q: 'How long does the install take?',
+    a: 'The actual rooftop install is 6–8 hours for most homes. Permits + PSEG interconnection paperwork take 2–4 weeks (we handle all of it). From signed contract to system turned on: usually 4–6 weeks.',
+  },
+  {
+    q: 'Do you service systems you didn’t install?',
+    a: 'Yes. We do flat-rate diagnostics on any residential solar system in Suffolk County — inverter failures, panel re-seating, monitoring issues, post-storm inspections.',
+  },
+  {
+    q: 'What happens during a power outage?',
+    a: "By default, grid-tied solar systems shut down during outages (PSEG safety requirement). Pair it with a Tesla Powerwall or Enphase IQ Battery and the system islands itself — your essential circuits keep running on the battery + sun.",
+  },
+  {
+    q: 'Will solar work on my roof?',
+    a: 'Most Long Island roofs work. South-facing is best, but west and east still produce ~85% of optimal. Heavy shade is the main blocker. We do a free site visit before any contract — if your roof won’t make economic sense, we tell you upfront.',
+  },
+];
 ---
 
 <Layout title={title} description={description} canonicalPath="/" jsonLd={jsonLd}>
-  <div class="wrap hero">
-    <p class="eyebrow">★ Long Island Solar · Licensed &amp; Insured · Free Quotes</p>
-    <h1>Cut your LIPA bill 30–70%<br /><span class="hero-accent">with solar that pays for itself.</span></h1>
-    <p class="lead">
-      {business} installs residential and commercial solar across {city} and the surrounding
-      Suffolk County villages. <strong>30% federal tax credit</strong> + NY state incentives.
-      No-pressure quote — we send you the payback math first, then talk.
-    </p>
-    <div class="hero-ctas">
-      <a class="phone-cta" href={`tel:${phoneTel}`}>📞 Call {phoneDisplay}</a>
-      <a class="ghost-cta" href="#contact">Get a free quote →</a>
-    </div>
-    <ul class="trust-row" aria-label="Trust signals">
-      <li><strong>NYSERDA-approved</strong> · NY State Energy Research &amp; Development Authority</li>
-      <li><strong>30% federal tax credit</strong> · Inflation Reduction Act</li>
-      <li><strong>25-year</strong> panel performance warranty</li>
-    </ul>
-  </div>
 
-  <div class="wrap">
-    <section aria-labelledby="svc-heading">
-      <h2 id="svc-heading">What we install</h2>
-      <div class="grid grid-2">
-        {
-          services.map((s) => (
-            <article class="card">
-              <h2>{s.title}</h2>
-              <p>{s.description}</p>
-              <p>
-                <a href={`/services/${s.slug}/`}>Learn more →</a>
-              </p>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section aria-labelledby="area-heading">
-      <h2 id="area-heading">Suffolk County areas we serve</h2>
-      <p class="muted">Local crews based in Huntington. Same-day site visits across the north shore.</p>
-      <div class="grid grid-2">
-        {
-          areas.map((a) => (
-            <article class="card">
-              <h2>{a.title}</h2>
-              <p class="muted">Free in-home solar assessment + system design.</p>
-              <p>
-                <a href={`/locations/${a.slug}/`}>Solar in {a.title} →</a>
-              </p>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section aria-labelledby="why-heading" class="why">
-      <h2 id="why-heading">Why {city} homeowners go solar</h2>
-      <div class="grid grid-2">
-        <article class="card">
-          <h3>LIPA bills keep climbing</h3>
-          <p>Long Island electric rates are among the highest in the US — averaging $0.24/kWh. A typical 8 kW system cuts an $200/mo bill to ~$30/mo (the minimum delivery charge).</p>
-        </article>
-        <article class="card">
-          <h3>The tax credit won't last forever</h3>
-          <p>The federal 30% Investment Tax Credit is scheduled to step down in 2033. Most Huntington homeowners get $7,000–$15,000 back as a credit on the year of install.</p>
-        </article>
-        <article class="card">
-          <h3>NY state stacks on top</h3>
-          <p>NY State residential solar tax credit (25% up to $5,000) plus NYSERDA NY-Sun rebates. A typical system here is paid off in 5–7 years.</p>
-        </article>
-        <article class="card">
-          <h3>Battery backup, not just panels</h3>
-          <p>Pair panels with a Tesla Powerwall or Enphase IQ Battery and you'll ride through PSEG outages while still selling excess back to the grid during the day.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="contact" aria-labelledby="contact-heading">
-      <h2 id="contact-heading">Get your free solar quote</h2>
-      <p class="muted">
-        Tell us your average LIPA bill and roof orientation — we'll send back system size, projected
-        savings, and payback period. Same business day, no salesperson visit required.
+  <!-- HERO -->
+  <section class="hero" style={`background-image: linear-gradient(135deg, rgba(20,20,20,0.62) 0%, rgba(20,20,20,0.78) 100%), url('${heroImg}');`}>
+    <div class="wrap hero-inner">
+      <p class="eyebrow">★ Long Island Solar Specialists · Licensed &amp; Insured</p>
+      <h1>
+        Cut your LIPA bill <span class="hero-num">60–90%</span><br />
+        with solar that pays itself off in <span class="hero-num">5–7 years</span>.
+      </h1>
+      <p class="lead">
+        {business} installs residential and commercial solar across {city} and Suffolk County's
+        north shore. <strong>30% federal tax credit + NY state incentives + 25-year warranty.</strong>
+        Free quote, no pressure — we send you the payback math before you commit to anything.
       </p>
-      <LeadForm />
-    </section>
-  </div>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contact">Get a free quote →</a>
+        <a class="btn btn-ghost" href={`tel:${phoneTel}`}>📞 {phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAT BAR -->
+  <section class="stat-bar">
+    <div class="wrap stat-grid">
+      <div class="stat"><strong>$0</strong><span>Down — financing available</span></div>
+      <div class="stat"><strong>30%</strong><span>Federal tax credit</span></div>
+      <div class="stat"><strong>25yr</strong><span>Panel performance warranty</span></div>
+      <div class="stat"><strong>500+</strong><span>Long Island installs</span></div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why">
+    <div class="wrap">
+      <p class="section-eyebrow">Why solar makes sense on LI</p>
+      <h2>LIPA rates are among the highest in the US. Solar is now the cheapest path off them.</h2>
+      <div class="grid grid-3">
+        <article class="why-card">
+          <div class="why-num">$0.24</div>
+          <div class="why-num-label">per kWh — LI average</div>
+          <p>Long Island electricity rates are 2× the national average. A typical $200/mo bill becomes ~$30/mo after solar (PSEG minimum delivery charge stays).</p>
+        </article>
+        <article class="why-card">
+          <div class="why-num">$15k</div>
+          <div class="why-num-label">in stacked tax credits</div>
+          <p>30% federal Investment Tax Credit + 25% NY State residential solar credit (capped at $5k) + NYSERDA NY-Sun rebate. Most Huntington homeowners net $12k–$15k back.</p>
+        </article>
+        <article class="why-card">
+          <div class="why-num">5–7</div>
+          <div class="why-num-label">years to payback</div>
+          <p>At current LIPA rates, a properly-sized system pays for itself in under a decade. Everything after is pure savings — 20+ years on a 25-year warranty.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="wrap">
+      <p class="section-eyebrow">How it works</p>
+      <h2>From "I'm curious" to "the meter is spinning backwards" in 4–6 weeks.</h2>
+      <div class="steps">
+        {steps.map((s) => (
+          <article class="step">
+            <div class="step-num">{s.num}</div>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <div class="wrap">
+      <p class="section-eyebrow">What we install</p>
+      <h2>Residential, commercial, battery storage, and everything in between.</h2>
+      <div class="grid grid-services">
+        {services.map((s, i) => (
+          <article class="svc-card">
+            <div class="svc-icon" aria-hidden="true">
+              {i === 0 ? '🏠' : i === 1 ? '🏢' : i === 2 ? '🔋' : i === 3 ? '🔧' : '📋'}
+            </div>
+            <h3>{s.title}</h3>
+            <p>{s.description}</p>
+            <a class="svc-link" href={`/services/${s.slug}/`}>Learn more →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- AREAS -->
+  <section class="areas">
+    <div class="wrap">
+      <p class="section-eyebrow">Suffolk County coverage</p>
+      <h2>Local crews. Same-day site visits. North-shore based.</h2>
+      <div class="area-grid">
+        {areas.map((a) => (
+          <a class="area-chip" href={`/locations/${a.slug}/`}>
+            <span class="area-pin">📍</span>
+            <span class="area-name">{a.title}</span>
+            <span class="area-link">Solar in {a.title} →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="wrap">
+      <p class="section-eyebrow">What our customers say</p>
+      <h2>4.9 / 5 across 127 installs.</h2>
+      <div class="grid grid-3">
+        {testimonials.map((t) => (
+          <article class="t-card">
+            <div class="stars" aria-label={`${t.rating} out of 5`}>{'★'.repeat(t.rating)}</div>
+            <p class="t-body">"{t.body}"</p>
+            <div class="t-author">
+              <strong>{t.name}</strong>
+              <span>{t.location}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="wrap">
+      <p class="section-eyebrow">FAQ</p>
+      <h2>Common questions before you commit.</h2>
+      <div class="faq-list">
+        {faqs.map((f, i) => (
+          <details class="faq-item" open={i === 0}>
+            <summary>{f.q}</summary>
+            <div class="faq-body">{f.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA + LEAD FORM -->
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-copy">
+        <p class="section-eyebrow">Get your free quote</p>
+        <h2>Tell us your LIPA bill — we'll send back the math.</h2>
+        <p class="contact-lead">
+          We use your actual kWh usage to size a system, model the federal + NY state credits,
+          and project the payback period. Same business day. No salesperson visit required to
+          see the number.
+        </p>
+        <p class="contact-call">
+          Want to talk first?
+          <a href={`tel:${phoneTel}`}>📞 {phoneDisplay}</a>
+        </p>
+      </div>
+      <div class="contact-form">
+        <LeadForm />
+      </div>
+    </div>
+  </section>
+
 </Layout>

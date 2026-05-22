@@ -13,11 +13,11 @@ interface Props {
 
 const { title, description, canonicalPath, jsonLd } = Astro.props;
 
-const business =
-  import.meta.env.PUBLIC_BUSINESS_NAME || 'Local Service';
-const phoneDisplay =
-  import.meta.env.PUBLIC_PHONE_DISPLAY || '(555) 555-0100';
-const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+15555550100';
+const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
+const phoneDisplay = import.meta.env.PUBLIC_PHONE_DISPLAY || '(631) 555-0188';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+16315550188';
+const city = import.meta.env.PUBLIC_CITY || 'Huntington';
+const year = new Date().getFullYear();
 const firstService = services[0];
 const firstArea = areas[0];
 ---
@@ -31,27 +31,47 @@ const firstArea = areas[0];
   <body>
     <header>
       <div class="wrap">
-        <a class="brand" href="/">{business}</a>
+        <a class="brand" href="/">☀ {business}</a>
         <nav class="nav" aria-label="Primary">
-          <a href={firstService ? `/services/${firstService.slug}/` : '/'}>Services</a>
-          <a href={firstArea ? `/locations/${firstArea.slug}/` : '/'}>Areas</a>
-          <a href="/#contact">Contact</a>
-          <a class="phone-cta" href={`tel:${phoneTel}`}>
-            <span aria-hidden="true">📞</span> {phoneDisplay}
-          </a>
+          <a href={firstService ? `/services/${firstService.slug}/` : '/#services'}>Services</a>
+          <a href={firstArea ? `/locations/${firstArea.slug}/` : '/#areas'}>Areas</a>
+          <a href="/#contact">Get a quote</a>
+          <a class="phone-cta" href={`tel:${phoneTel}`}>📞 {phoneDisplay}</a>
         </nav>
       </div>
     </header>
+
     <main>
       <slot />
     </main>
+
     <footer>
       <div class="wrap">
-        <p>
-          © {new Date().getFullYear()}
-          {business}. Serving {import.meta.env.PUBLIC_CITY || 'your area'},
-          {import.meta.env.PUBLIC_STATE || ''}.
-        </p>
+        <div>
+          <div class="foot-brand">☀ {business}</div>
+          <p>Residential and commercial solar installation across {city} and the Suffolk County north shore. Licensed, insured, NYSERDA-approved.</p>
+          <p>📞 <a href={`tel:${phoneTel}`}>{phoneDisplay}</a></p>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            {services.map((s) => (
+              <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4>Areas served</h4>
+          <ul>
+            {areas.map((a) => (
+              <li><a href={`/locations/${a.slug}/`}>{a.title}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div class="wrap foot-legal">
+        <span>© {year} {business}. NYSERDA-approved · Licensed &amp; Insured</span>
+        <span>Suffolk County, NY · License #SC-2026-XXXX</span>
       </div>
     </footer>
   </body>
