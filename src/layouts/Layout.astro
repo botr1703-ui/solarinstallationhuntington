@@ -31,12 +31,12 @@ const firstArea = areas[0];
   <body>
     <header>
       <div class="wrap">
-        <a class="brand" href="/">☀ {business}</a>
+        <a class="brand" href="/">{business}</a>
         <nav class="nav" aria-label="Primary">
-          <a href={firstService ? `/services/${firstService.slug}/` : '/#services'}>Services</a>
-          <a href={firstArea ? `/locations/${firstArea.slug}/` : '/#areas'}>Areas</a>
+          <a href={firstService ? '/services/' + firstService.slug + '/' : '/#services'}>Services</a>
+          <a href={firstArea ? '/locations/' + firstArea.slug + '/' : '/#areas'}>Areas</a>
           <a href="/#contact">Get a quote</a>
-          <a class="phone-cta" href={`tel:${phoneTel}`}>📞 {phoneDisplay}</a>
+          <a class="phone-cta" href={'tel:' + phoneTel}>{phoneDisplay}</a>
         </nav>
       </div>
     </header>
@@ -48,29 +48,29 @@ const firstArea = areas[0];
     <footer>
       <div class="wrap">
         <div>
-          <div class="foot-brand">☀ {business}</div>
+          <div class="foot-brand">{business}</div>
           <p>Residential and commercial solar installation across {city} and the Suffolk County north shore. Licensed, insured, NYSERDA-approved.</p>
-          <p>📞 <a href={`tel:${phoneTel}`}>{phoneDisplay}</a></p>
+          <p><a href={'tel:' + phoneTel}>{phoneDisplay}</a></p>
         </div>
         <div>
           <h4>Services</h4>
           <ul>
-            {services.map((s) => (
-              <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>
-            ))}
+            {services.map(function (s) {
+              return <li><a href={'/services/' + s.slug + '/'}>{s.title}</a></li>;
+            })}
           </ul>
         </div>
         <div>
           <h4>Areas served</h4>
           <ul>
-            {areas.map((a) => (
-              <li><a href={`/locations/${a.slug}/`}>{a.title}</a></li>
-            ))}
+            {areas.map(function (a) {
+              return <li><a href={'/locations/' + a.slug + '/'}>{a.title}</a></li>;
+            })}
           </ul>
         </div>
       </div>
       <div class="wrap foot-legal">
-        <span>© {year} {business}. NYSERDA-approved · Licensed &amp; Insured</span>
+        <span>© {year} {business}. NYSERDA-approved · Licensed and Insured</span>
         <span>Suffolk County, NY · License #SC-2026-XXXX</span>
       </div>
     </footer>
