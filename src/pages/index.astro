@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { areas, services } from '../config/site';
+
+const business =
+  import.meta.env.PUBLIC_BUSINESS_NAME || 'Your Local Service';
+const city = import.meta.env.PUBLIC_CITY || 'Your City';
+const state = import.meta.env.PUBLIC_STATE || 'ST';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+15555550100';
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://example.com';
+
+const title = `${business} | ${city}, ${state}`;
+const description = `Book ${business} in ${city}. Fast response, clear pricing, and local crews. Call or request a callback.`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: business,
+  url: siteUrl,
+  telephone: phoneTel,
+  areaServed: { '@type': 'City', name: city, containedInPlace: { '@type': 'State', name: state } },
+  description,
+};
+---
+
+<Layout title={title} description={description} canonicalPath="/" jsonLd={jsonLd}>
+  <div class="wrap hero">
+    <h1>{city}&rsquo;s {business}</h1>
+    <p class="lead">
+      Emergency-friendly scheduling, licensed and insured teams, and a simple callback—tell us what
+      you need removed or repaired.
+    </p>
+    <p>
+      <a class="phone-cta" href={`tel:${phoneTel}`}>Call now</a>
+    </p>
+  </div>
+
+  <div class="wrap">
+    <section aria-labelledby="svc-heading">
+      <h2 id="svc-heading">Services</h2>
+      <div class="grid grid-2">
+        {
+          services.map((s) => (
+            <article class="card">
+              <h2>{s.title}</h2>
+              <p>{s.description}</p>
+              <p>
+                <a href={`/services/${s.slug}/`}>Learn more</a>
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section aria-labelledby="area-heading">
+      <h2 id="area-heading">Areas we serve</h2>
+      <div class="grid grid-2">
+        {
+          areas.map((a) => (
+            <article class="card">
+              <h2>{a.title}</h2>
+              <p class="muted">Local crews and routing in this zone.</p>
+              <p>
+                <a href={`/locations/${a.slug}/`}>View {a.title}</a>
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Request a callback</h2>
+      <p class="muted">We reply same business day. For urgent jobs, call.</p>
+      <LeadForm />
+    </section>
+  </div>
+</Layout>

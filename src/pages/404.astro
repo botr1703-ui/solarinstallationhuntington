@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Page not found';
+const description = 'The page you requested could not be found.';
+---
+
+<Layout title={title} description={description} canonicalPath="/404/">
+  <div class="wrap hero">
+    <h1>404</h1>
+    <p class="lead">That page doesn&rsquo;t exist. Try the <a href="/">home page</a>.</p>
+  </div>
+</Layout>

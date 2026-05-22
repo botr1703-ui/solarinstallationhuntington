@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import Analytics from '../components/Analytics.astro';
+import { areas, services } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, canonicalPath, jsonLd } = Astro.props;
+
+const business =
+  import.meta.env.PUBLIC_BUSINESS_NAME || 'Local Service';
+const phoneDisplay =
+  import.meta.env.PUBLIC_PHONE_DISPLAY || '(555) 555-0100';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+15555550100';
+const firstService = services[0];
+const firstArea = areas[0];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SEO title={title} description={description} canonicalPath={canonicalPath} jsonLd={jsonLd} />
+    <Analytics />
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <a class="brand" href="/">{business}</a>
+        <nav class="nav" aria-label="Primary">
+          <a href={firstService ? `/services/${firstService.slug}/` : '/'}>Services</a>
+          <a href={firstArea ? `/locations/${firstArea.slug}/` : '/'}>Areas</a>
+          <a href="/#contact">Contact</a>
+          <a class="phone-cta" href={`tel:${phoneTel}`}>
+            <span aria-hidden="true">📞</span> {phoneDisplay}
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <div class="wrap">
+        <p>
+          © {new Date().getFullYear()}
+          {business}. Serving {import.meta.env.PUBLIC_CITY || 'your area'},
+          {import.meta.env.PUBLIC_STATE || ''}.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

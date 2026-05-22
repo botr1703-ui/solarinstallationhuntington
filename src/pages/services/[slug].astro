@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { services } from '../../config/site';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = services.find((s) => s.slug === slug);
+if (!service) throw new Error(`Unknown service: ${slug}`);
+
+const business =
+  import.meta.env.PUBLIC_BUSINESS_NAME || 'Your Local Service';
+const city = import.meta.env.PUBLIC_CITY || 'Your City';
+const state = import.meta.env.PUBLIC_STATE || 'ST';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+15555550100';
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://example.com';
+
+const title = `${service.title} in ${city}, ${state} | ${business}`;
+const description = `${service.description} Serving ${city} and nearby areas.`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: `${service.title} — ${business}`,
+  provider: { '@type': 'LocalBusiness', name: business, telephone: phoneTel, url: siteUrl },
+  areaServed: { '@type': 'City', name: city },
+  description: service.description,
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonicalPath={`/services/${slug}/`}
+  jsonLd={jsonLd}
+>
+  <div class="wrap hero">
+    <h1>{service.title} in {city}</h1>
+    <p class="lead">{service.description}</p>
+    <p>
+      <a class="phone-cta" href={`tel:${phoneTel}`}>Call {city}</a>
+    </p>
+  </div>
+  <div class="wrap">
+    <p class="muted">
+      <a href="/">← Back to home</a>
+    </p>
+  </div>
+</Layout>

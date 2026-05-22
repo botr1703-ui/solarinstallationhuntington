@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { areas } from '../../config/site';
+
+export function getStaticPaths() {
+  return areas.map((a) => ({ params: { slug: a.slug } }));
+}
+
+const { slug } = Astro.params;
+const area = areas.find((a) => a.slug === slug);
+if (!area) throw new Error(`Unknown area: ${slug}`);
+
+const business =
+  import.meta.env.PUBLIC_BUSINESS_NAME || 'Your Local Service';
+const city = import.meta.env.PUBLIC_CITY || 'Your City';
+const state = import.meta.env.PUBLIC_STATE || 'ST';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+15555550100';
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://example.com';
+
+const title = `${business} in ${area.title}, ${city} ${state}`;
+const description = `${business} serves ${area.title} and surrounding neighborhoods. Same-day availability in many cases—call or book online.`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: `${siteUrl}/locations/${slug}/`,
+  about: {
+    '@type': 'LocalBusiness',
+    name: business,
+    telephone: phoneTel,
+    url: siteUrl,
+  },
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonicalPath={`/locations/${slug}/`}
+  jsonLd={jsonLd}
+>
+  <div class="wrap hero">
+    <h1>{area.title}</h1>
+    <p class="lead">
+      Local routing and crews covering {area.title}. Based in {city}, {state}—fast response for
+      urgent jobs when capacity allows.
+    </p>
+    <p>
+      <a class="phone-cta" href={`tel:${phoneTel}`}>Call now</a>
+    </p>
+  </div>
+  <div class="wrap">
+    <p class="muted">
+      <a href="/">← Back to home</a>
+    </p>
+  </div>
+</Layout>

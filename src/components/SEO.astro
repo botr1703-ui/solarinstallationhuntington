@@ -1,0 +1,30 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, canonicalPath = '', jsonLd } = Astro.props;
+const base = import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || '';
+const canonical = `${base}${canonicalPath || '/'}`;
+const ogImage = `${base}/og-default.svg`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<title>{title}</title>
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{jsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+)}
