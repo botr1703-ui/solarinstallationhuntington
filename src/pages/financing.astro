@@ -1,0 +1,241 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { services } from '../config/site';
+
+const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+16317598716';
+const phoneDisplay = import.meta.env.PUBLIC_PHONE_DISPLAY || '(631) 759-8716';
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://www.solarhuntington.com';
+
+const title = `Solar Financing on Long Island | ${business}`;
+const description =
+  "Long Island solar financing — federal 30% tax credit, NY State 25% credit, NYSERDA rebates, solar loans, PPAs, $0 down options. How each financing path actually works for Huntington homeowners.";
+
+const faq = [
+  {
+    q: "Can I get solar with $0 down on Long Island?",
+    a: "Yes. Multiple LI solar loans offer $0-down financing — typically 5.99-8.99% APR over 20 or 25 years. The monthly loan payment is usually less than the PSEG bill you're replacing, so you net positive from month 1. Solar loans also let you keep the federal + NY State tax credits (PPAs and leases don't — the third-party owner claims them).",
+  },
+  {
+    q: "What's the difference between a solar loan, a lease, and a PPA?",
+    a: "Solar loan: you borrow money to buy the system. You own it, you take all incentives, you build equity. Lease: a third-party owns the system on your roof; you pay them a fixed monthly rate to use it. They keep the tax credits. PPA (Power Purchase Agreement): same as a lease but you pay per-kWh produced instead of a fixed monthly. Most LI homeowners do best with a solar loan — keeps the $12,000-$15,000 in stacked tax credits in your pocket instead of the financing company's.",
+  },
+  {
+    q: "Do I get the 30% federal tax credit even if I finance?",
+    a: "Yes, as long as you OWN the system. Solar loans qualify — you own the equipment, the lender just holds a security interest. Leases and PPAs do not qualify because the third-party owner already claimed the credit when they installed it. The 30% Residential Clean Energy Credit is good through 2032 and is a dollar-for-dollar reduction of your federal tax liability.",
+  },
+  {
+    q: "What does NY State add on top of the federal credit?",
+    a: "NY State Residential Solar Tax Credit: 25% of the system cost, capped at $5,000. Stacks on top of the federal 30%. Plus the NYSERDA NY-Sun program — a per-watt rebate that gets paid to the installer and discounts your purchase price upfront. Combined, total state + federal incentives reduce a typical $25,000 system to around $12,000-$15,000 net.",
+  },
+  {
+    q: "How do tax credits actually work — do I get a check?",
+    a: "No — they reduce what you owe in federal + state income tax. If you owe $20,000 in federal tax for the year and your solar credit is $7,500, you owe $12,500 instead. If your credit exceeds what you owe in a given year, the unused portion rolls forward up to 5 years federal / NY State has its own rules. We recommend confirming with your CPA, but most LI households with W-2 income consume the credit in 1-2 tax years.",
+  },
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonicalPath="/financing/"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${siteUrl}/financing/`,
+        url: `${siteUrl}/financing/`,
+        name: title,
+        description,
+        about: { '@id': `${siteUrl}/#business` },
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: faq.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+    ],
+  }}
+>
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">Solar Financing · Long Island</p>
+      <h1>How Long Island homeowners actually pay for solar.</h1>
+      <p class="lead">
+        Federal 30% tax credit · NY State 25% credit (up to $5,000) · NYSERDA NY-Sun rebate ·
+        Solar loans from 5.99% APR · $0-down options. A typical $25,000 system nets to
+        $12,000–$15,000 after incentives — and most LI homeowners finance the net, not the
+        gross.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contact">Get my numbers</a>
+        <a class="btn btn-ghost" href={`tel:${phoneTel}`}>Call {phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="prose-section">
+    <div class="wrap">
+      <article class="prose-block">
+        <h2>The four financing paths on Long Island, ranked by payback</h2>
+        <p>
+          Solar pays for itself in 5–7 years on current LIPA rates regardless of how you pay
+          for it. But the financing structure changes how MUCH money you keep over the
+          25-year system life. Here's how each option actually works for a typical Huntington
+          household.
+        </p>
+      </article>
+
+      <article class="prose-block">
+        <h2>1. Cash purchase — best 25-year return</h2>
+        <p>
+          You pay the full system cost upfront ($24,000–$28,000 for a typical 8 kW
+          residential install). You collect every incentive: 30% federal credit, 25% NY State
+          credit, NYSERDA rebate. Net out-of-pocket lands around $12,000–$15,000. Payback in
+          5–7 years; the remaining 18–20 years are pure savings.
+        </p>
+        <p>
+          Best for: homeowners with the cash sitting in a checking or savings account earning
+          near-zero interest. The "yield" on a solar purchase (annual LIPA savings ÷ net
+          cost) typically beats 12-15% — better than the broad stock market average and
+          dramatically better than any savings account.
+        </p>
+      </article>
+
+      <article class="prose-block">
+        <h2>2. Solar loan — best for most LI homeowners</h2>
+        <p>
+          You borrow the system cost, typically over 20 or 25 years at 5.99–8.99% APR
+          (current LI market). You own the system from day one, so you keep all the tax
+          credits and incentives. Monthly loan payment usually lands under the PSEG bill it
+          replaces — you're net positive from month 1.
+        </p>
+        <p>
+          The math sweet spot: take the federal + NY State tax refunds (typically $9,000–
+          $12,000 combined) and pay down the loan principal in year 2. That cuts the loan
+          term roughly in half. After payoff, every kWh the panels produce is pure savings
+          for the remaining 18–20 years.
+        </p>
+      </article>
+
+      <article class="prose-block">
+        <h2>3. Lease — fixed-monthly hands-off</h2>
+        <p>
+          A third-party (typically Sunrun, Sunnova, or a local financier) owns the system on
+          your roof. You sign a 20-to-25-year lease and pay them a fixed monthly rate to use
+          the solar electricity. They keep the federal + NY State tax credits because they
+          own the equipment.
+        </p>
+        <p>
+          Best for: homeowners who don't owe enough federal tax to use the 30% credit (low
+          AGI, retirees, non-profits, some self-employed), or who simply want the
+          hands-off experience. Lease lifetime savings are typically 15-25% less than
+          owning, but you avoid all upfront cost and maintenance liability.
+        </p>
+      </article>
+
+      <article class="prose-block">
+        <h2>4. PPA (Power Purchase Agreement) — pay per kWh</h2>
+        <p>
+          Like a lease but instead of a fixed monthly, you pay per kWh of solar
+          production at a rate below your current PSEG rate. The third-party owns the
+          system + takes the incentives. Your payment varies with sun (high in summer,
+          lower in winter), which can be appealing or annoying depending on your
+          temperament.
+        </p>
+        <p>
+          PPAs are more common on commercial installs than residential on LI. For homes
+          they're roughly equivalent to leases in total savings.
+        </p>
+      </article>
+
+      <article class="prose-block">
+        <h2>The hidden cost: locked-in rate vs PSEG escalation</h2>
+        <p>
+          PSEG Long Island electricity rates have risen 4-6% annually for the last decade.
+          That compounds: a $200/month bill today is realistically a $400/month bill in 12
+          years. Solar locks in your effective rate at $0.04-$0.07/kWh (the financed
+          equivalent of net-of-incentives cost spread over the system life) versus PSEG's
+          $0.24/kWh and climbing.
+        </p>
+        <p>
+          That's why "payback period" undersells the value. A 5-7 year payback today is
+          actually a 3-5 year payback if you model realistic PSEG rate increases over the
+          system life.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bullets-section">
+    <div class="wrap">
+      <h2>Incentives currently available on Long Island</h2>
+      <ul class="check-list">
+        <li>Federal Residential Clean Energy Credit — 30% through 2032</li>
+        <li>NY State Solar Tax Credit — 25% up to $5,000</li>
+        <li>NYSERDA NY-Sun Rebate — per-watt, paid to installer</li>
+        <li>Federal ITC on standalone batteries (since 2023) — 30%</li>
+        <li>NYSERDA battery incentive — $250/kWh, capped at $5,000</li>
+        <li>PSEG net-metering — full 1:1 retail credit</li>
+        <li>Property tax exemption — system value not added to assessment</li>
+        <li>Sales tax exemption — no NY sales tax on solar equipment</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="wrap">
+      <p class="section-eyebrow">FAQ</p>
+      <h2>Solar financing — common questions.</h2>
+      <div class="faq-list">
+        {faq.map((f, i) => (
+          <details class="faq-item" open={i === 0}>
+            <summary>{f.q}</summary>
+            <div class="faq-body">{f.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-copy">
+        <p class="section-eyebrow">Run my numbers</p>
+        <h2>Tell us your LIPA bill — we'll model every financing path.</h2>
+        <p class="contact-lead">
+          We send you a side-by-side: cash, loan (with several APR scenarios), lease, PPA.
+          Year-by-year cash flow on each. You pick the path that fits your situation —
+          we don't push.
+        </p>
+        <p class="contact-call">
+          Want to talk first? <a href={`tel:${phoneTel}`}>Call {phoneDisplay}</a>
+        </p>
+      </div>
+      <div class="contact-form">
+        <LeadForm />
+      </div>
+    </div>
+  </section>
+
+  <section class="related">
+    <div class="wrap">
+      <h2>Related</h2>
+      <div class="related-grid">
+        {services.slice(0, 4).map((s) => (
+          <a class="related-card" href={`/services/${s.slug}/`}>
+            <h3>{s.title}</h3>
+            <p>{s.description}</p>
+          </a>
+        ))}
+      </div>
+      <p class="muted center"><a href="/">← Back to home</a></p>
+    </div>
+  </section>
+</Layout>

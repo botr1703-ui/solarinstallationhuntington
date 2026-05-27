@@ -28,6 +28,7 @@ const areaSlugs = [
 const topLevelPages = [
   '/',
   '/about/',
+  '/financing/',
 ];
 
 const urls = [
