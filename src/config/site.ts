@@ -769,5 +769,82 @@ export const insights: InsightPost[] = [
       },
     ],
   },
+  {
+    slug: 'tesla-powerwall-vs-enphase-iq-battery-2026',
+    title: 'Tesla Powerwall 3 vs Enphase IQ Battery 5P: which is better for Long Island in 2026?',
+    description:
+      'A 2026 side-by-side of Tesla Powerwall 3 and Enphase IQ Battery 5P for Long Island solar — capacity, output, install cost, outage performance, and which one we recommend for which homes.',
+    publishedAt: '2026-05-02',
+    updatedAt: '2026-05-20',
+    author: 'Huntington Solar Co',
+    excerpt:
+      'Tesla Powerwall 3 wins on raw capacity (13.5 kWh) and price-per-kWh; Enphase IQ Battery 5P wins on modularity and microinverter compatibility. The right pick depends on your existing solar hardware and how much of the home you want to back up.',
+    tags: ['Batteries', 'Powerwall', 'Enphase', 'Long Island'],
+    bodySections: [
+      {
+        heading: 'The two batteries Long Island installs the most',
+        paragraphs: [
+          "Roughly 90% of battery-pair installs we do across Suffolk County in 2026 use one of two systems: Tesla Powerwall 3 (the big slab on the side of the house) or Enphase IQ Battery 5P (modular, often two or three units stacked in the garage).",
+          "Both are LFP chemistry (lithium iron phosphate — safer thermal profile than older NMC cells), both come with a 10-year warranty, both back up your home during outages, both qualify for the federal 30% ITC and NYSERDA's RBI incentive. The differences are in capacity, output power, modularity, and how they integrate with your inverter.",
+        ],
+      },
+      {
+        heading: 'Capacity — Tesla wins on raw kWh per unit',
+        paragraphs: [
+          "Tesla Powerwall 3 ships as a single 13.5 kWh unit. Enphase IQ Battery 5P ships as a 5 kWh modular unit — most installs use 2 or 3 units (10–15 kWh).",
+          "For raw price-per-kWh, Tesla wins. A single Powerwall 3 retails around $14,000 installed (~$1,037/kWh). A 3-unit Enphase 5P install runs $18,000–$21,000 installed (~$1,200–$1,400/kWh).",
+          "But: most homes do not need 13.5 kWh. If you only want to back up your fridge, internet, lights, and HVAC blower (the typical Long Island outage list), 5–10 kWh is plenty. Enphase's modularity lets you size the battery to your actual essential-loads draw — start with one unit, add more later.",
+        ],
+      },
+      {
+        heading: 'Output power — Tesla wins on continuous',
+        paragraphs: [
+          "Tesla Powerwall 3 delivers 11.5 kW continuous output (the highest of any home battery on the market). That is enough to run a central AC compressor + electric oven simultaneously without any load-management config.",
+          "Enphase IQ Battery 5P delivers 3.84 kW continuous per unit. A 3-unit install gets you ~11.5 kW continuous — comparable to a single Powerwall — but you have to install three units to get there.",
+          "Translation: if you want to back up the whole home (including central AC) during outages, Powerwall 3 single-unit gets you there. With Enphase you need 2–3 units, AND you may need to configure load-controlled circuits to keep the central AC from tripping the system.",
+        ],
+      },
+      {
+        heading: 'Inverter compatibility — depends on what you already have',
+        paragraphs: [
+          "If your solar system uses Enphase IQ microinverters (the most common setup on Long Island in 2026), Enphase IQ Battery 5P drops into the same monitoring system seamlessly. One app, one warranty contact, one electrical box.",
+          "If your solar uses SolarEdge HD-Wave + optimizers, you can pair either battery, but Tesla Powerwall 3 has built-in solar inverters of its own — meaning you can effectively replace the SolarEdge inverter and let the Powerwall handle solar + storage + grid in one. Useful for SolarEdge customers approaching inverter end-of-life (~year 10–12).",
+          "If your solar uses an older SMA, Fronius, or other string inverter — both Tesla and Enphase work via AC coupling, but Tesla is typically the cleaner install.",
+        ],
+      },
+      {
+        heading: 'Outage performance — both handle Long Island storms',
+        paragraphs: [
+          "Both batteries island the home within about one cycle (~16ms for Powerwall 3, similar for Enphase). You will not lose a second of UPS-grade equipment.",
+          "Tesla Powerwall 3 supports 'storm watch' — when the National Weather Service issues a severe weather alert for your area, the battery automatically charges to 100% from grid in advance. Powerwall users on Long Island report multi-day outage rideovers during nor'easters when paired with active solar production.",
+          "Enphase has its own equivalent (Storm Guard) introduced in 2025. Both handle Long Island's typical 4-hour-to-2-day outage scenarios cleanly.",
+        ],
+      },
+      {
+        heading: 'How we typically recommend',
+        paragraphs: [
+          "If you want one battery, whole-home backup, simplest install, lowest $/kWh: Tesla Powerwall 3.",
+          "If you have Enphase microinverters already, want modular sizing, prefer to start small and expand: Enphase IQ Battery 5P (1–3 units).",
+          "If you have aging SolarEdge string inverter approaching end of warranty: Tesla Powerwall 3 + retire the SolarEdge inverter.",
+          "If you want maximum storm-rideover capacity (multi-day outages, heat pump + EV): two Powerwall 3 units in parallel (27 kWh, ~24 hours of full-home runtime even without solar production).",
+          "We install both. The recommendation is always driven by your existing inverter, your backup-load priority list, and your budget — not by which product we sell more of.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is Tesla Powerwall 3 better than Enphase IQ Battery 5P?',
+        a: 'It depends on what you already have and what you want backed up. Tesla Powerwall 3 wins on raw capacity per unit (13.5 kWh) and price-per-kWh. Enphase IQ Battery 5P wins on modularity (5 kWh units) and seamless integration with Enphase IQ microinverter solar arrays.',
+      },
+      {
+        q: 'How much does a Tesla Powerwall 3 cost installed in Huntington, NY in 2026?',
+        a: 'Installed cost in Suffolk County is typically $14,000 for a single Powerwall 3 unit. After the federal 30% ITC and NYSERDA RBI battery incentive, net out-of-pocket lands around $6,000–$7,500.',
+      },
+      {
+        q: 'Can I add a battery to my existing solar system?',
+        a: 'Yes — both Tesla Powerwall and Enphase IQ Battery can retrofit to existing solar systems. The federal 30% Investment Tax Credit covers battery retrofits (the battery does not need to be installed with the original solar to qualify). We do battery retrofits on solar systems we did not install.',
+      },
+    ],
+  },
 ];
 

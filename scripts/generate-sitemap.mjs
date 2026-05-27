@@ -37,6 +37,7 @@ const topLevelPages = [
 const insightSlugs = [
   'how-much-does-solar-cost-in-huntington-ny-2026',
   'solar-permits-town-of-huntington-2026-walkthrough',
+  'tesla-powerwall-vs-enphase-iq-battery-2026',
 ];
 
 const urls = [
