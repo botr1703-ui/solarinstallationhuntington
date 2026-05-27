@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { insights } from '../../config/site';
+
+export async function getStaticPaths() {
+  return insights.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = insights.find((p) => p.slug === slug);
+if (!post) {
+  throw new Error(`Insight post not found: ${slug}`);
+}
+
+const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+16317598716';
+const phoneDisplay = import.meta.env.PUBLIC_PHONE_DISPLAY || '(631) 759-8716';
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://www.solarhuntington.com';
+
+const title = `${post.title} | ${business}`;
+const description = post.description;
+
+const blogPostingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  '@id': `${siteUrl}/insights/${post.slug}/`,
+  url: `${siteUrl}/insights/${post.slug}/`,
+  headline: post.title,
+  description: post.description,
+  datePublished: post.publishedAt,
+  dateModified: post.updatedAt || post.publishedAt,
+  author: {
+    '@type': 'Organization',
+    name: post.author,
+    url: siteUrl,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: business,
+    url: siteUrl,
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${siteUrl}/insights/${post.slug}/` },
+};
+
+const faqLd = post.faq && post.faq.length > 0
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: post.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    }
+  : null;
+
+function fmt(iso: string): string {
+  const d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+
+const otherPosts = insights.filter((p) => p.slug !== post.slug).slice(0, 3);
+---
+
+<Layout title={title} description={description} canonicalPath={`/insights/${post.slug}/`} jsonLd={blogPostingLd}>
+  {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
+
+  <Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Insights', href: '/insights/' },
+    { label: post.title },
+  ]} />
+
+  <article class="insight-article">
+    <header class="insight-header">
+      <div class="wrap">
+        {post.tags && post.tags.length > 0 ? <p class="eyebrow">{post.tags.join(' · ')}</p> : null}
+        <h1>{post.title}</h1>
+        <p class="lead">{post.excerpt}</p>
+        <p class="insight-byline">
+          <span>{post.author}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={post.publishedAt}>Published {fmt(post.publishedAt)}</time>
+          {post.updatedAt && post.updatedAt !== post.publishedAt ? (
+            <>
+              <span aria-hidden="true">·</span>
+              <time datetime={post.updatedAt}>Updated {fmt(post.updatedAt)}</time>
+            </>
+          ) : null}
+        </p>
+      </div>
+    </header>
+
+    <section class="prose-section">
+      <div class="wrap prose-wrap">
+        {post.bodySections.map((s) => (
+          <div class="prose-block">
+            <h2>{s.heading}</h2>
+            {s.paragraphs.map((p) => <p>{p}</p>)}
+          </div>
+        ))}
+
+        {post.faq && post.faq.length > 0 ? (
+          <div class="prose-block">
+            <h2>Frequently asked</h2>
+            <dl class="faq-list">
+              {post.faq.map((f) => (
+                <>
+                  <dt>{f.q}</dt>
+                  <dd>{f.a}</dd>
+                </>
+              ))}
+            </dl>
+          </div>
+        ) : null}
+      </div>
+    </section>
+  </article>
+
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-copy">
+        <p class="section-eyebrow">Ready for your own numbers?</p>
+        <h2>Get a quote with the math behind it.</h2>
+        <p class="contact-lead">
+          We use your actual LIPA bill, your actual roof, your actual usage to size the system
+          and project the payback — same math we used in this article, applied to your home.
+        </p>
+        <p class="contact-call">
+          Or call us: <a href={`tel:${phoneTel}`}>{phoneDisplay}</a>
+        </p>
+      </div>
+      <div class="contact-form">
+        <LeadForm />
+      </div>
+    </div>
+  </section>
+
+  {otherPosts.length > 0 ? (
+    <section class="related">
+      <div class="wrap">
+        <h2>More from our solar insights</h2>
+        <ul class="related-list">
+          {otherPosts.map((p) => (
+            <li><a href={`/insights/${p.slug}/`}>{p.title}</a></li>
+          ))}
+        </ul>
+        <p class="muted center"><a href="/insights/">← All insights</a></p>
+      </div>
+    </section>
+  ) : null}
+</Layout>

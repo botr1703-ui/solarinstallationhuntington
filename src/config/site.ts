@@ -591,3 +591,183 @@ export const areas: AreaPage[] = [
     localStats: 'Suffolk County, NY · ~5,000 population · ZIP 11721',
   },
 ];
+
+/**
+ * Insights — long-form articles that target real local search intent
+ * (cost questions, permit questions, incentive walkthroughs). Each
+ * post renders as its own static page under /insights/[slug] with
+ * BlogPosting JSON-LD; the index at /insights lists all of them.
+ *
+ * Phantom-repeatable: schema mirrors services/areas — fill content
+ * in this file, the templates render whatever's here.
+ */
+export type InsightPost = {
+  slug: string;
+  title: string;
+  /** Meta description, ~155 chars. */
+  description: string;
+  /** ISO date string. */
+  publishedAt: string;
+  updatedAt?: string;
+  author: string;
+  /** ~250-character lead shown on the index card + hero. */
+  excerpt: string;
+  bodySections: BodySection[];
+  /** Optional FAQ for FAQPage JSON-LD. */
+  faq?: FaqEntry[];
+  /** Optional tag list for category badges. */
+  tags?: string[];
+};
+
+export const insights: InsightPost[] = [
+  {
+    slug: 'how-much-does-solar-cost-in-huntington-ny-2026',
+    title: 'How much does solar cost in Huntington, NY in 2026?',
+    description:
+      'A 2026 pricing walkthrough for residential solar in Huntington and the surrounding Suffolk County north shore — gross cost, federal + NY State incentives, payback math.',
+    publishedAt: '2026-04-12',
+    updatedAt: '2026-05-15',
+    author: 'Huntington Solar Co',
+    excerpt:
+      'Residential solar in Huntington runs $24K–$28K gross for a typical 8 kW system in 2026. Federal + NY State incentives drop that to $12K–$15K net out-of-pocket, with 5–7 year payback at current LIPA rates. Here is the line-by-line math.',
+    tags: ['Pricing', 'Incentives', 'Long Island'],
+    bodySections: [
+      {
+        heading: 'The 8 kW Huntington baseline',
+        paragraphs: [
+          "Most homeowners we quote in Huntington, Greenlawn, and Northport land on a system between 7 and 10 kW — enough to offset roughly 95% of their annual electric usage. The 8 kW system is the mid-point and a useful baseline to anchor the cost conversation.",
+          "Installed cost for a turnkey 8 kW residential system in Huntington in 2026 is $24,000–$28,000. That covers panels (Tier-1 monocrystalline, typically Q Cells, REC, or SunPower), inverters (Enphase microinverters or a SolarEdge string + optimizers), racking, electrical work, permits, PSEG interconnection, monitoring, and the full 25-year panel + 12-year inverter warranties.",
+          "Battery storage is separate. A Tesla Powerwall 3 (13.5 kWh) adds about $13,000–$15,000 to the install. Most homeowners go solar-only first and add a battery later, since the federal tax credit applies to storage retrofits even after the initial install.",
+        ],
+      },
+      {
+        heading: 'Federal Investment Tax Credit (30%)',
+        paragraphs: [
+          "The federal residential clean energy credit covers 30% of the gross system cost — panels, inverters, batteries, labor, sales tax, the whole stack. It is a tax credit, not a deduction: it reduces your federal tax bill dollar-for-dollar. Any unused credit rolls forward.",
+          "On the $26,000 8 kW baseline, that is an $7,800 federal credit. The credit is scheduled to step down after 2032 but is locked in at 30% through end of 2026.",
+        ],
+      },
+      {
+        heading: 'New York State residential solar tax credit (25%, capped)',
+        paragraphs: [
+          "New York stacks its own 25% solar credit on top of the federal credit, capped at $5,000. On the $26,000 baseline, that is the full $5,000.",
+          "Like the federal credit, it is dollar-for-dollar against your state tax bill, with carry-forward if you cannot use it all in one year.",
+        ],
+      },
+      {
+        heading: 'NYSERDA NY-Sun rebate (varies by queue)',
+        paragraphs: [
+          "NYSERDA pays a per-watt rebate that flows through your installer at the point of sale. The amount drops as each block fills — current Long Island block (Block 12 as of mid-2026) pays roughly $0.20/W to $0.30/W. On 8 kW that is $1,600–$2,400 off the gross.",
+          "This is paid as a discount on the install price — you do not have to file paperwork to claim it.",
+        ],
+      },
+      {
+        heading: 'Net cost + payback math',
+        paragraphs: [
+          "Pulling it together for the 8 kW Huntington install at $26,000:",
+          "Gross install: $26,000. Less federal 30% credit ($7,800), NY State credit ($5,000), NYSERDA block rebate ($2,000 mid-range). Net out-of-pocket: roughly $11,200.",
+          "Average Huntington home produces ~10,400 kWh/year from an 8 kW system. At LIPA's mid-2026 effective residential rate of ~$0.27/kWh delivered, that is $2,808/year in displaced electricity. Net payback: 4.0 years (extremely fast — LIPA rates have risen 4–6% annually, accelerating payback further).",
+          "After payback, the panels keep producing for the remaining 18–20 years of the 25-year warranty — essentially free electricity once the system is paid off.",
+        ],
+      },
+      {
+        heading: 'What changes the math',
+        paragraphs: [
+          "Higher LIPA usage (heat pump, EV, pool, large family) means more displaced electricity and a shorter payback — sometimes under 3 years on heavy-use homes.",
+          "Lower-incentive blocks (NYSERDA queue fills) drop the rebate to $0.10/W or zero. That pushes payback out by 6–9 months.",
+          "Battery storage adds ~$13K but is also covered by the 30% federal credit, so net add is ~$9K. Payback math depends on time-of-use rate exposure and outage frequency.",
+          "Bottom line: most Huntington homes hit payback in year 5–7, even with conservative assumptions.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'What is the average cost of solar panels in Huntington, NY?',
+        a: 'A typical 8 kW residential solar system in Huntington runs $24,000–$28,000 installed (before incentives). After the federal 30% credit, NY State 25% credit (capped at $5,000), and NYSERDA NY-Sun rebate, net out-of-pocket is typically $11,000–$15,000.',
+      },
+      {
+        q: 'How long is the payback period for solar in Huntington?',
+        a: 'Most Huntington homeowners see 5–7 year payback at current LIPA rates. Heavy-electric homes (heat pumps, EVs, pools) often pay back in 3–4 years; lighter-use homes 7–8 years.',
+      },
+      {
+        q: 'Can I combine the federal and NY State solar tax credits?',
+        a: 'Yes — they are stackable. You can claim the federal 30% Investment Tax Credit AND the New York State 25% residential solar credit (capped at $5,000). Both are dollar-for-dollar tax credits, not deductions.',
+      },
+    ],
+  },
+  {
+    slug: 'solar-permits-town-of-huntington-2026-walkthrough',
+    title: 'Solar permits in the Town of Huntington: a 2026 walkthrough',
+    description:
+      'What homeowners need to know about Town of Huntington solar permits in 2026 — building department review, electrical permits, PSEG interconnection, and timeline.',
+    publishedAt: '2026-03-04',
+    updatedAt: '2026-05-20',
+    author: 'Huntington Solar Co',
+    excerpt:
+      'Town of Huntington solar permits in 2026 typically clear in 3–5 weeks: 1–2 weeks for Building Department review, 1 week for the electrical permit, and 1–2 weeks for PSEG interconnection approval. Here is what happens at each step.',
+    tags: ['Permits', 'Long Island', 'Process'],
+    bodySections: [
+      {
+        heading: 'Who issues what',
+        paragraphs: [
+          "Residential solar in the Town of Huntington requires three approvals: a Building Department permit (structural + zoning), an electrical permit (Suffolk County), and PSEG interconnection approval (utility).",
+          "Your installer should handle all three — you should never have to file paperwork yourself. If a quote omits permits, it is incomplete; permit fees + the installer's labor to file them run $1,200–$1,800 and should be itemized in the contract.",
+        ],
+      },
+      {
+        heading: 'Step 1 — Town of Huntington Building Department',
+        paragraphs: [
+          "The Building Department reviews structural attachment (roof load + flashing details) and zoning (panels must sit within the buildable envelope of your lot — they cannot project beyond the roof ridge or eaves).",
+          "Permit application includes: signed-and-sealed engineering drawings (load calculation showing your roof rafters can carry the panel weight + snow load), the panel layout, electrical single-line diagram, and the manufacturer cut sheets.",
+          "Typical Town of Huntington turnaround: 1–2 weeks for first review. If the reviewer requests revisions (most common: clarifying setbacks or roof-edge clearance), allow another week.",
+          "Permit fee: typically $300–$400 for residential, based on system value.",
+        ],
+      },
+      {
+        heading: 'Special case — Village Building Departments',
+        paragraphs: [
+          "If your home is inside Northport Village, Lloyd Harbor, Asharoken, or another incorporated village, the village building department reviews the install instead of (or in addition to) the Town of Huntington. Village reviews tend to be stricter — especially historic-district homes in Northport Village, which require Architectural Review Board approval.",
+          "ARB review focuses on visual impact. Practical workaround: low-profile all-black panels (black frames, black backsheet) almost always clear ARB on the first pass. Standard silver-framed panels often need a second submission.",
+          "Add 2–3 weeks to the timeline for village reviews.",
+        ],
+      },
+      {
+        heading: 'Step 2 — Suffolk County electrical permit',
+        paragraphs: [
+          "After Building Department approval, your installer files the electrical permit with Suffolk County. This covers the interconnection wiring, DC and AC disconnect placement, grounding, and AFCI/GFCI compliance.",
+          "Suffolk County electrical permits typically clear in 5–7 business days. The county does an in-person electrical inspection AFTER install completion — usually 1–2 weeks after install — at which point you receive the green tag.",
+        ],
+      },
+      {
+        heading: 'Step 3 — PSEG Long Island interconnection',
+        paragraphs: [
+          "PSEG Long Island has to approve the interconnection before your system can be turned on and start exporting to the grid. The Permission to Operate (PTO) letter is the last gate.",
+          "PSEG reviews the single-line diagram, your meter compatibility (most homes need a meter swap to a bidirectional net meter — PSEG provides it at no charge), and confirms that local grid capacity supports the export.",
+          "Timeline: PSEG application typically clears in 1–2 weeks for systems under 25 kW. After PTO, PSEG schedules the meter swap; most homes are turned on within a week of the swap.",
+        ],
+      },
+      {
+        heading: 'Total realistic timeline',
+        paragraphs: [
+          "From signed contract to turn-on, the realistic Town of Huntington timeline is 5–9 weeks: 2 weeks for design + drawings, 1–2 weeks for the Town permit, 1 week for the Suffolk County electrical permit, install day (typically 1 day on-roof), 1–2 weeks for inspection + PSEG PTO, and 1 week for the meter swap and turn-on.",
+          "Village or ARB reviews push this to 7–12 weeks. Lloyd Harbor and historic-district Northport are the slowest local jurisdictions.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Do I need a permit to install solar in Huntington, NY?',
+        a: 'Yes. Residential solar in the Town of Huntington requires a Building Department permit, a Suffolk County electrical permit, and PSEG Long Island interconnection approval. A reputable installer handles all three filings on your behalf.',
+      },
+      {
+        q: 'How long does the Town of Huntington take to approve a solar permit?',
+        a: 'Town of Huntington Building Department review typically takes 1–2 weeks for a standard residential solar permit. Add 2–3 weeks if you are inside an incorporated village (Northport, Lloyd Harbor, Asharoken) or a historic district.',
+      },
+      {
+        q: 'How much do solar permits cost in Huntington?',
+        a: 'Town of Huntington Building Department permits typically run $300–$400 for a residential solar system. Suffolk County electrical permits add ~$150. PSEG interconnection is free. Permits are normally rolled into the installer’s turnkey price.',
+      },
+    ],
+  },
+];
+

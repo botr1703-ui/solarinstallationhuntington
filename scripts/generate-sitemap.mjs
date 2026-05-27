@@ -30,12 +30,19 @@ const topLevelPages = [
   '/about/',
   '/financing/',
   '/case-studies/',
+  '/insights/',
+];
+
+const insightSlugs = [
+  'how-much-does-solar-cost-in-huntington-ny-2026',
+  'solar-permits-town-of-huntington-2026-walkthrough',
 ];
 
 const urls = [
   ...topLevelPages.map((p) => `${base}${p}`),
   ...serviceSlugs.map((s) => `${base}/services/${s}/`),
   ...areaSlugs.map((a) => `${base}/locations/${a}/`),
+  ...insightSlugs.map((i) => `${base}/insights/${i}/`),
 ];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>

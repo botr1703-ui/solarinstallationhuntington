@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { insights } from '../../config/site';
+
+const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+16317598716';
+const phoneDisplay = import.meta.env.PUBLIC_PHONE_DISPLAY || '(631) 759-8716';
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://www.solarhuntington.com';
+
+const title = `Long Island Solar Insights | ${business}`;
+const description = `Long-form guidance on solar pricing, permits, incentives, and installs across Huntington and the Suffolk County north shore. Written by ${business}.`;
+
+const posts = [...insights].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': `${siteUrl}/insights/`,
+  url: `${siteUrl}/insights/`,
+  name: title,
+  description,
+  publisher: { '@id': `${siteUrl}/#business` },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.title,
+    url: `${siteUrl}/insights/${p.slug}/`,
+    datePublished: p.publishedAt,
+    dateModified: p.updatedAt || p.publishedAt,
+    author: { '@type': 'Organization', name: p.author },
+  })),
+};
+
+function fmt(iso: string): string {
+  const d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+---
+
+<Layout title={title} description={description} canonicalPath="/insights/" jsonLd={jsonLd}>
+  <Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Insights' },
+  ]} />
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">Solar guidance · {business}</p>
+      <h1>Long Island solar, explained.</h1>
+      <p class="lead">
+        Pricing math, permit walkthroughs, incentive deep-dives — written by the people who do
+        the installs, for the homeowners who pay for them.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="/#contact">Get a quote</a>
+        <a class="btn btn-ghost" href={`tel:${phoneTel}`}>Call {phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="insights-index">
+    <div class="wrap">
+      <ul class="insights-grid">
+        {posts.map((p) => (
+          <li class="insight-card">
+            <a class="insight-link" href={`/insights/${p.slug}/`}>
+              <div class="insight-meta">
+                <time datetime={p.publishedAt}>{fmt(p.publishedAt)}</time>
+                {p.tags && p.tags.length > 0 ? <span class="insight-tag">{p.tags[0]}</span> : null}
+              </div>
+              <h2>{p.title}</h2>
+              <p>{p.excerpt}</p>
+              <span class="insight-cta">Read article →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Layout>
