@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import LeadForm from '../../components/LeadForm.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import { areas, services } from '../../config/site';
 
 export function getStaticPaths() {
@@ -50,6 +51,12 @@ const otherAreas = areas.filter((a) => a.slug !== slug).slice(0, 5);
   canonicalPath={`/locations/${slug}/`}
   jsonLd={jsonLd}
 >
+  <Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Locations', href: `/locations/${areas[0].slug}/` },
+    { label: area.title },
+  ]} />
+
   <section class="hero">
     <div class="wrap hero-inner">
       <p class="eyebrow">{business} · Serving {area.title}, {state}</p>

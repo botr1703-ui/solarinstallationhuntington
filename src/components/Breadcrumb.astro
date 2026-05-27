@@ -1,0 +1,49 @@
+---
+/**
+ * Breadcrumb — renders a visible breadcrumb trail AND emits the
+ * BreadcrumbList JSON-LD for Google's SERP rendering.
+ *
+ * Pass `items` as an ordered array from root to current page.
+ * The current page is the last item; render with aria-current.
+ */
+export type BreadcrumbItem = {
+  label: string;
+  /** Omit `href` on the current (last) item so it renders as plain text. */
+  href?: string;
+};
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+const { items } = Astro.props;
+
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://www.solarhuntington.com';
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((it, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: it.label,
+    item: it.href ? `${siteUrl}${it.href}` : undefined,
+  })),
+};
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <div class="wrap">
+    <ol>
+      {items.map((it, i) => {
+        const isLast = i === items.length - 1;
+        if (isLast || !it.href) {
+          return <li aria-current={isLast ? 'page' : undefined}>{it.label}</li>;
+        }
+        return <li><a href={it.href}>{it.label}</a></li>;
+      })}
+    </ol>
+  </div>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />

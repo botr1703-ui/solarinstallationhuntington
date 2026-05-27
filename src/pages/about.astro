@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LeadForm from '../components/LeadForm.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { aboutPage, areas, services } from '../config/site';
 
 const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
@@ -49,6 +50,11 @@ const jsonLd = {
   canonicalPath="/about/"
   jsonLd={jsonLd}
 >
+  <Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'About' },
+  ]} />
+
   <section class="hero">
     <div class="wrap hero-inner">
       <p class="eyebrow">About · {business}</p>

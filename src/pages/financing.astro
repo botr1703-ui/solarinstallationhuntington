@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LeadForm from '../components/LeadForm.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { services } from '../config/site';
 
 const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
@@ -63,6 +64,11 @@ const faq = [
     ],
   }}
 >
+  <Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Financing' },
+  ]} />
+
   <section class="hero">
     <div class="wrap hero-inner">
       <p class="eyebrow">Solar Financing · Long Island</p>

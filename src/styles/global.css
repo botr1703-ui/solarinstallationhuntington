@@ -88,6 +88,77 @@ header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-cont
 .nav .phone-cta { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; background: var(--accent); color: var(--dark); font-weight: 700; border-radius: 999px; transition: background 0.15s, transform 0.15s; }
 .nav .phone-cta:hover { background: var(--accent-dark); color: var(--dark); transform: translateY(-1px); }
 
+/* === Header dropdown menus (desktop hover) === */
+.nav-item { position: relative; }
+.nav-trigger { display: inline-flex; align-items: center; gap: 0.25rem; }
+.nav-caret { font-size: 0.7rem; opacity: 0.7; transition: transform 0.15s; }
+.nav-has-menu:hover .nav-caret,
+.nav-has-menu:focus-within .nav-caret { transform: rotate(180deg); }
+.nav-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  min-width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+  z-index: 120;
+}
+.nav-has-menu:hover .nav-menu,
+.nav-has-menu:focus-within .nav-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav-menu-link {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.92rem;
+  color: var(--text-2);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.nav-menu-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+/* On mobile the dropdown becomes a no-op — just the trigger anchor */
+@media (max-width: 720px) {
+  .nav-menu { display: none; }
+  .nav-caret { display: none; }
+}
+
+/* === Breadcrumbs (sub-pages) === */
+.breadcrumb {
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+  padding: 0.85rem 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.breadcrumb ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+}
+.breadcrumb li { display: flex; align-items: center; gap: 0.4rem; }
+.breadcrumb li + li::before { content: '/'; color: var(--border-strong); }
+.breadcrumb a { color: var(--muted); font-weight: 500; }
+.breadcrumb a:hover { color: var(--accent-dark); }
+.breadcrumb [aria-current='page'] { color: var(--text); font-weight: 600; }
+
 /* === Hero === */
 .hero { background-size: cover; background-position: center; background-color: var(--dark); color: #ffffff; padding: 6.5rem 0 7rem; }
 .hero-inner { max-width: 880px; }

@@ -33,8 +33,22 @@ const firstArea = areas[0];
       <div class="wrap">
         <a class="brand" href="/">{business}</a>
         <nav class="nav" aria-label="Primary">
-          <a href={firstService ? '/services/' + firstService.slug + '/' : '/#services'}>Services</a>
-          <a href={firstArea ? '/locations/' + firstArea.slug + '/' : '/#areas'}>Areas</a>
+          <div class="nav-item nav-has-menu">
+            <a href={firstService ? '/services/' + firstService.slug + '/' : '/#services'} class="nav-trigger">Services <span class="nav-caret" aria-hidden="true">▾</span></a>
+            <div class="nav-menu" role="menu">
+              {services.map(function (s) {
+                return <a class="nav-menu-link" href={'/services/' + s.slug + '/'} role="menuitem">{s.title}</a>;
+              })}
+            </div>
+          </div>
+          <div class="nav-item nav-has-menu">
+            <a href={firstArea ? '/locations/' + firstArea.slug + '/' : '/#areas'} class="nav-trigger">Areas <span class="nav-caret" aria-hidden="true">▾</span></a>
+            <div class="nav-menu" role="menu">
+              {areas.map(function (a) {
+                return <a class="nav-menu-link" href={'/locations/' + a.slug + '/'} role="menuitem">Solar in {a.title}</a>;
+              })}
+            </div>
+          </div>
           <a href="/financing/">Financing</a>
           <a href="/about/">About</a>
           <a href="/#contact">Get a quote</a>
