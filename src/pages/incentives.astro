@@ -1,0 +1,264 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { services } from '../config/site';
+
+const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
+const state = import.meta.env.PUBLIC_STATE || 'NY';
+const phoneTel = import.meta.env.PUBLIC_PHONE_TEL || '+16317598716';
+const phoneDisplay = import.meta.env.PUBLIC_PHONE_DISPLAY || '(631) 759-8716';
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://www.solarhuntington.com';
+
+const title = `Long Island Solar Incentives 2026 — Federal + NY State Credits | ${business}`;
+const description = `2026 solar incentives for Long Island homeowners — 30% federal ITC, 25% NY State credit (capped at $5,000), NYSERDA NY-Sun rebate, plus property + sales tax exemptions. What you actually qualify for.`;
+
+// FAQ section drives FAQPage rich-result eligibility.
+const faqs = [
+  {
+    q: 'What is the federal solar tax credit in 2026?',
+    a: 'The federal Residential Clean Energy Credit covers 30% of the total cost of your solar system (panels, inverters, batteries, labor, sales tax) as a dollar-for-dollar credit against your federal tax bill. It is locked in at 30% through end of 2026 and steps down in 2033.',
+  },
+  {
+    q: 'Does New York have its own solar tax credit?',
+    a: 'Yes. New York State residential solar tax credit covers 25% of system cost, capped at $5,000, as a dollar-for-dollar credit against your NY State income tax. It stacks with the federal ITC. Unused credit carries forward up to 5 years.',
+  },
+  {
+    q: 'What is the NYSERDA NY-Sun rebate?',
+    a: 'NYSERDA NY-Sun pays a per-watt rebate that flows through your installer at point of sale. Current Long Island block (Block 12 as of mid-2026) pays roughly $0.20/W to $0.30/W. On an 8 kW system that is $1,600–$2,400 off the gross — no paperwork on your end.',
+  },
+  {
+    q: 'Is solar exempt from sales tax in NY?',
+    a: 'Yes. Residential solar electric systems are exempt from New York State sales tax. On a $26,000 install, that saves roughly $1,000 in sales tax versus a typical 4% local rate.',
+  },
+  {
+    q: 'Are solar panels exempt from property tax in NY?',
+    a: 'New York Real Property Tax Law section 487 provides a 15-year property tax exemption for the added home value from solar — meaning your assessment does not go up when you install solar. Town of Huntington follows this exemption. Some Suffolk County municipalities require a one-page filing; your installer typically handles it.',
+  },
+  {
+    q: 'How do I claim solar tax credits?',
+    a: 'Federal: file IRS Form 5695 with your tax return for the year the system is placed in service. New York State: file Form IT-255. Your installer provides the placed-in-service date and final cost letter. Most tax software handles both forms automatically.',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${siteUrl}/incentives/#faq`,
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout title={title} description={description} canonicalPath="/incentives/" jsonLd={jsonLd}>
+  <Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: 'Incentives' },
+  ]} />
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">2026 Solar Incentives · Long Island, {state}</p>
+      <h1>Every dollar Long Island homeowners can stack on solar.</h1>
+      <p class="lead">
+        A typical $26,000 install in Huntington gets nearly $15,000 in stacked incentives — bringing
+        net out-of-pocket to roughly $11,000. Here is every credit, rebate, and exemption available
+        in 2026, plus what we file on your behalf.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contact">Get your install priced</a>
+        <a class="btn btn-ghost" href={`tel:${phoneTel}`}>Call {phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="prose-section">
+    <div class="wrap prose-wrap">
+      <div class="prose-block">
+        <h2>1. Federal Investment Tax Credit (30%)</h2>
+        <p>
+          The federal Residential Clean Energy Credit covers 30% of total system cost — panels,
+          inverters, batteries, labor, sales tax, the full installed cost. It is a dollar-for-dollar
+          tax credit, not a deduction.
+        </p>
+        <p>
+          On a $26,000 install: <strong>$7,800 federal credit</strong>. Locked in at 30% through
+          end of 2026. Filed via IRS Form 5695. Carries forward if you cannot use it all in one year.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h2>2. New York State Solar Tax Credit (25%, capped at $5,000)</h2>
+        <p>
+          NY State stacks its own 25% credit on top of the federal credit. Capped at $5,000 — on a
+          $26,000 install you get the full <strong>$5,000 state credit</strong>. Filed via NY Form
+          IT-255 with your state tax return.
+        </p>
+        <p>
+          Unused state credit rolls forward up to 5 years. This credit applies to roof-mounted
+          residential solar; commercial systems use a different credit structure.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h2>3. NYSERDA NY-Sun Block Rebate</h2>
+        <p>
+          NYSERDA NY-Sun pays a per-watt incentive that flows through your installer as a point-of-sale
+          discount. The Long Island region is currently in Block 12, paying roughly $0.20–$0.30/W.
+        </p>
+        <p>
+          On an 8 kW system: <strong>$1,600–$2,400 off the gross</strong>. Zero paperwork on your end —
+          your installer claims it on your behalf at contract signing. Important: blocks fill, and once
+          a block is full the per-watt rate drops. Locking in current block pricing is one reason not
+          to delay if you are already getting quotes.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h2>4. NY State Sales Tax Exemption</h2>
+        <p>
+          Residential solar electric systems are exempt from New York State sales tax under Tax Law
+          section 1115(ee). On a $26,000 install, that saves roughly <strong>$1,040</strong> versus a
+          typical 4% local rate — applied automatically at the time of sale by your installer.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h2>5. Property Tax Exemption (15 years)</h2>
+        <p>
+          NY Real Property Tax Law section 487 provides a 15-year exemption from the added home value
+          attributable to solar. Translation: installing solar will not raise your property assessment
+          (and therefore not raise your school + property taxes) for 15 years.
+        </p>
+        <p>
+          Town of Huntington follows the section 487 exemption. Some Suffolk County municipalities
+          require a one-page filing — your installer typically handles it. Estimated savings: $500–$1,500/year
+          in avoided property tax depending on your tax rate.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h2>6. PSEG Long Island Net Metering</h2>
+        <p>
+          PSEG Long Island runs full retail net metering for residential solar customers — every
+          kWh your panels push to the grid offsets one kWh of nighttime consumption at full retail
+          rate. This is not technically an "incentive" but it is what makes solar economically viable
+          on Long Island.
+        </p>
+        <p>
+          PSEG also runs a Value of Distributed Energy Resources (VDER) compensation framework — the
+          newer tariff. Most residential solar in Suffolk County opts for the legacy retail net
+          metering tariff which produces better payback in our experience.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h2>7. Battery Storage Incentives</h2>
+        <p>
+          The federal 30% ITC <em>also</em> covers paired battery storage (Tesla Powerwall, Enphase
+          IQ Battery) — including retrofits to existing solar systems. On a $14,000 Tesla Powerwall
+          3 install: $4,200 back via the federal credit.
+        </p>
+        <p>
+          NYSERDA also runs a residential battery incentive program (RBI) that adds roughly $200–$300/kWh
+          on top — on a 13.5 kWh Powerwall that is up to $4,050 additional. Stack is real: a $14,000
+          battery can land at $6,000 net out-of-pocket.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h2>Stacked example — 8 kW Huntington install, 2026</h2>
+        <p>
+          <strong>Gross install cost:</strong> $26,000.
+        </p>
+        <p>
+          - Federal 30% ITC: <strong>−$7,800</strong>.<br />
+          - NY State 25% credit (capped): <strong>−$5,000</strong>.<br />
+          - NYSERDA NY-Sun Block 12: <strong>−$2,000</strong>.<br />
+          - NY sales tax exemption: <strong>−$1,040</strong>.<br />
+          - 15-year property tax exemption: avoids ~$10,000 in property tax over the exemption period.
+        </p>
+        <p>
+          <strong>Net out-of-pocket: ~$11,200.</strong> At PSEG's mid-2026 effective rate (~$0.27/kWh
+          delivered) and ~10,400 kWh/year production from the system, payback lands around year 4.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h2>What we file for you</h2>
+        <p>
+          When you sign with us, the following are filed on your behalf at no additional cost:
+        </p>
+        <ul class="incentive-list">
+          <li>NYSERDA NY-Sun block reservation + rebate claim</li>
+          <li>NY State sales tax exemption (applied automatically at contract)</li>
+          <li>NY State property tax exemption filing (where required by municipality)</li>
+          <li>PSEG Long Island interconnection application and net metering tariff selection</li>
+          <li>Town of Huntington Building Department + Suffolk County electrical permits</li>
+          <li>Final placed-in-service cost letter for your federal Form 5695 + state Form IT-255 filings</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="wrap">
+      <h2 class="section-h">Frequently asked: 2026 Long Island solar incentives</h2>
+      <dl class="faq-grid">
+        {faqs.map((f) => (
+          <div class="faq-item">
+            <dt>{f.q}</dt>
+            <dd>{f.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-copy">
+        <p class="section-eyebrow">Your specific incentive math</p>
+        <h2>Get your exact stacked-incentive total.</h2>
+        <p class="contact-lead">
+          Send us a recent LIPA bill and we will send back a numbered quote: gross install, every
+          incentive applied line-by-line, net out-of-pocket, and your projected payback year.
+        </p>
+        <p class="contact-call">
+          Or call: <a href={`tel:${phoneTel}`}>{phoneDisplay}</a>
+        </p>
+      </div>
+      <div class="contact-form">
+        <LeadForm />
+      </div>
+    </div>
+  </section>
+
+  <section class="related">
+    <div class="wrap">
+      <h2>Related</h2>
+      <div class="related-grid">
+        <a class="related-card" href="/financing/">
+          <h3>Financing</h3>
+          <p>Cash, loan, lease, PPA — what makes sense on Long Island.</p>
+        </a>
+        <a class="related-card" href="/case-studies/">
+          <h3>Case studies</h3>
+          <p>Five anonymized Long Island installs with real payback math.</p>
+        </a>
+        <a class="related-card" href="/insights/how-much-does-solar-cost-in-huntington-ny-2026/">
+          <h3>Cost article</h3>
+          <p>Line-by-line pricing breakdown for an 8 kW Huntington system.</p>
+        </a>
+        <a class="related-card" href={`/services/${services[0].slug}/`}>
+          <h3>Residential solar</h3>
+          <p>What we install — panels, inverters, monitoring, warranties.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
