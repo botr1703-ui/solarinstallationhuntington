@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import SEO from '../components/SEO.astro';
 import Analytics from '../components/Analytics.astro';
+import Logo from '../components/Logo.astro';
+import Icon from '../components/Icon.astro';
 import { areas, services } from '../config/site';
 
 interface Props {
@@ -32,7 +34,13 @@ const firstArea = areas[0];
   <body>
     <header>
       <div class="wrap">
-        <a class="brand" href="/">{business}</a>
+        <a class="brand" href="/" aria-label={business + ' — home'}><Logo size={38} /></a>
+
+        <input type="checkbox" id="navToggle" class="nav-toggle" hidden />
+        <label for="navToggle" class="nav-burger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </label>
+
         <nav class="nav" aria-label="Primary">
           <div class="nav-item nav-has-menu">
             <a href={firstService ? '/services/' + firstService.slug + '/' : '/#services'} class="nav-trigger">Services <span class="nav-caret" aria-hidden="true">▾</span></a>
@@ -50,13 +58,20 @@ const firstArea = areas[0];
               })}
             </div>
           </div>
-          <a href="/financing/">Financing</a>
-          <a href="/incentives/">Incentives</a>
-          <a href="/case-studies/">Case studies</a>
-          <a href="/insights/">Insights</a>
+          <div class="nav-item nav-has-menu">
+            <a href="/incentives/" class="nav-trigger">Resources <span class="nav-caret" aria-hidden="true">▾</span></a>
+            <div class="nav-menu" role="menu">
+              <a class="nav-menu-link" href="/incentives/" role="menuitem">Incentives</a>
+              <a class="nav-menu-link" href="/financing/" role="menuitem">Financing</a>
+              <a class="nav-menu-link" href="/process/" role="menuitem">Our process</a>
+              <a class="nav-menu-link" href="/warranty/" role="menuitem">Warranty</a>
+              <a class="nav-menu-link" href="/case-studies/" role="menuitem">Case studies</a>
+              <a class="nav-menu-link" href="/insights/" role="menuitem">Insights</a>
+            </div>
+          </div>
           <a href="/about/">About</a>
-          <a href="/#contact">Get a quote</a>
-          <a class="phone-cta" href={'tel:' + phoneTel}>{phoneDisplay}</a>
+          <a class="nav-quote" href="/#contact">Get a quote</a>
+          <a class="phone-cta" href={'tel:' + phoneTel}><Icon name="phone" size={16} /> {phoneDisplay}</a>
         </nav>
       </div>
     </header>
@@ -68,7 +83,7 @@ const firstArea = areas[0];
     <footer>
       <div class="wrap foot-grid">
         <div class="foot-col">
-          <div class="foot-brand">{business}</div>
+          <div class="foot-brand"><Logo size={40} variant="light" /></div>
           <p>Residential and commercial solar across {city} and the Suffolk County north shore. NABCEP-certified · NYSERDA-approved · Licensed and insured.</p>
           <p class="foot-phone"><a href={'tel:' + phoneTel}>{phoneDisplay}</a></p>
         </div>

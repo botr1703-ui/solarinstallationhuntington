@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LeadForm from '../components/LeadForm.astro';
+import Icon from '../components/Icon.astro';
 import { areas, services } from '../config/site';
 
 const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
@@ -17,7 +18,7 @@ const description = business + ' installs residential & commercial solar across 
 
 const heroImg = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=2000&q=85&auto=format&fit=crop';
 
-const serviceIcons = ['Residential', 'Commercial', 'Battery', 'Service', 'Quote'];
+const serviceGlyphs = ['house', 'building', 'battery', 'wrench', 'document'];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -46,10 +47,25 @@ const jsonLd = {
 };
 
 const steps = [
-  { num: '01', title: 'Send your bill', body: 'Email or text us a recent LIPA bill. We use your actual kWh usage to size the system.' },
-  { num: '02', title: 'Free site visit', body: 'Roof inspection, shade analysis, panel layout. About 45 minutes. No pitch, just numbers.' },
-  { num: '03', title: 'Install in a day', body: 'Most residential systems go up in 6 to 8 hours. We pull all permits and handle PSEG paperwork.' },
-  { num: '04', title: 'Activate and save', body: 'PSEG approves the system, the meter spins backwards, your next bill drops 60 to 90%.' },
+  { num: '01', glyph: 'document', title: 'Send your bill', body: 'Email or text us a recent LIPA bill. We use your actual kWh usage to size the system.' },
+  { num: '02', glyph: 'search', title: 'Free site visit', body: 'Roof inspection, shade analysis, panel layout. About 45 minutes. No pitch, just numbers.' },
+  { num: '03', glyph: 'panel', title: 'Install in a day', body: 'Most residential systems go up in 6 to 8 hours. We pull all permits and handle PSEG paperwork.' },
+  { num: '04', glyph: 'zap', title: 'Activate and save', body: 'PSEG approves the system, the meter spins backwards, your next bill drops 60 to 90%.' },
+];
+
+const whyCards = [
+  { glyph: 'dollar', num: '$0.24', label: 'per kWh — LI average', body: 'Long Island electricity rates are 2x the national average. A typical $200/mo bill becomes about $30/mo after solar (PSEG minimum delivery charge stays).' },
+  { glyph: 'percent', num: '$15k', label: 'in stacked tax credits', body: '30% federal Investment Tax Credit, 25% NY State residential solar credit (capped at $5k), NYSERDA NY-Sun rebate. Most Huntington homeowners net $12k to $15k back.' },
+  { glyph: 'clock', num: '5–7', label: 'years to payback', body: 'At current LIPA rates, a properly-sized system pays for itself in under a decade. Everything after is pure savings — 20+ years on a 25-year warranty.' },
+];
+
+const trustCards = [
+  { glyph: 'award', title: 'NABCEP Certified', body: "Every install supervised by a NABCEP Certified PV Installation Professional — the industry's gold-standard credential." },
+  { glyph: 'shieldCheck', title: 'NYSERDA NY-Sun Installer', body: 'Quality Solar Installer track. You get the per-watt NY-Sun rebate baked into your quote, applied automatically.' },
+  { glyph: 'bolt', title: 'Tesla + Enphase Certified', body: 'Tesla Powerwall Certified Installer · Enphase Platinum Installer. Manufacturer-direct warranty coverage on both ecosystems.' },
+  { glyph: 'star', title: 'BBB A+ Rated', body: '4.9 / 5 across 127 installs. Licensed and insured in Suffolk + Nassau Counties — license number on every contract.' },
+  { glyph: 'shield', title: '25-Year Panel Warranty', body: 'Manufacturer power-production warranty on every panel + workmanship and roof-penetration warranty from us directly.' },
+  { glyph: 'users', title: 'No Subcontractors', body: 'The crew that quotes the install is the crew on your roof. One team, one warranty, one phone number for the next 25 years.' },
 ];
 
 const testimonials = [
@@ -104,21 +120,48 @@ const faqs = [
       <p class="section-eyebrow">Why solar makes sense on LI</p>
       <h2>LIPA rates are among the highest in the US. Solar is now the cheapest path off them.</h2>
       <div class="grid grid-3">
-        <article class="why-card">
-          <div class="why-num">$0.24</div>
-          <div class="why-num-label">per kWh — LI average</div>
-          <p>Long Island electricity rates are 2x the national average. A typical $200/mo bill becomes about $30/mo after solar (PSEG minimum delivery charge stays).</p>
-        </article>
-        <article class="why-card">
-          <div class="why-num">$15k</div>
-          <div class="why-num-label">in stacked tax credits</div>
-          <p>30% federal Investment Tax Credit, 25% NY State residential solar credit (capped at $5k), NYSERDA NY-Sun rebate. Most Huntington homeowners net $12k to $15k back.</p>
-        </article>
-        <article class="why-card">
-          <div class="why-num">5–7</div>
-          <div class="why-num-label">years to payback</div>
-          <p>At current LIPA rates, a properly-sized system pays for itself in under a decade. Everything after is pure savings — 20+ years on a 25-year warranty.</p>
-        </article>
+        {whyCards.map(function (c) {
+          return (
+            <article class="why-card">
+              <div class="why-icon"><Icon name={c.glyph} size={26} /></div>
+              <div class="why-num">{c.num}</div>
+              <div class="why-num-label">{c.label}</div>
+              <p>{c.body}</p>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase">
+    <div class="wrap showcase-grid">
+      <div class="showcase-media">
+        <img
+          src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=80&auto=format&fit=crop"
+          alt="All-black solar panels installed on a Long Island home roof"
+          loading="lazy"
+        />
+        <div class="showcase-badge">
+          <Icon name="leaf" size={18} />
+          <span>~10,400 kWh / year of clean power</span>
+        </div>
+      </div>
+      <div class="showcase-copy">
+        <p class="section-eyebrow">Built for north-shore roofs</p>
+        <h2>Panels that actually look right on a Long Island home.</h2>
+        <p>
+          We default to all-black, low-profile panels — the kind that clear historic-district and
+          village architectural review on the first pass in Northport, Lloyd Harbor, and Cold Spring
+          Harbor. No silver grids, no bulky racking, no eyesore.
+        </p>
+        <ul class="showcase-list">
+          <li><Icon name="check" size={18} /> All-black monocrystalline panels, flush-mounted</li>
+          <li><Icon name="check" size={18} /> Tier-1 hardware: Q Cells, REC, SunPower</li>
+          <li><Icon name="check" size={18} /> Enphase microinverters — panel-level monitoring</li>
+          <li><Icon name="check" size={18} /> Salt-air-rated mounts for waterfront homes</li>
+        </ul>
+        <a class="btn btn-primary" href="/case-studies/">See real installs <Icon name="arrowRight" size={16} /></a>
       </div>
     </div>
   </section>
@@ -131,7 +174,10 @@ const faqs = [
         {steps.map(function (s) {
           return (
             <article class="step">
-              <div class="step-num">{s.num}</div>
+              <div class="step-top">
+                <span class="step-num">{s.num}</span>
+                <span class="step-glyph"><Icon name={s.glyph} size={22} /></span>
+              </div>
               <h3>{s.title}</h3>
               <p>{s.body}</p>
             </article>
@@ -147,13 +193,13 @@ const faqs = [
       <h2>Residential, commercial, battery storage, and everything in between.</h2>
       <div class="grid grid-services">
         {services.map(function (s, i) {
-          const tag = serviceIcons[i] || '';
+          const glyph = serviceGlyphs[i] || 'sun';
           return (
             <article class="svc-card">
-              <span class="svc-tag">{tag}</span>
+              <div class="svc-icon"><Icon name={glyph} size={26} /></div>
               <h3>{s.title}</h3>
               <p>{s.description}</p>
-              <a class="svc-link" href={'/services/' + s.slug + '/'}>Learn more</a>
+              <a class="svc-link" href={'/services/' + s.slug + '/'}>Learn more <Icon name="arrowRight" size={15} /></a>
             </article>
           );
         })}
@@ -200,6 +246,32 @@ const faqs = [
     </div>
   </section>
 
+  <section class="cta-band">
+    <svg class="cta-sun" viewBox="0 0 200 200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="46" fill="rgba(255,255,255,0.5)" />
+      <g stroke="rgba(255,255,255,0.45)" stroke-width="7" stroke-linecap="round">
+        <line x1="100" y1="14" x2="100" y2="38" />
+        <line x1="100" y1="162" x2="100" y2="186" />
+        <line x1="14" y1="100" x2="38" y2="100" />
+        <line x1="162" y1="100" x2="186" y2="100" />
+        <line x1="39" y1="39" x2="56" y2="56" />
+        <line x1="144" y1="144" x2="161" y2="161" />
+        <line x1="161" y1="39" x2="144" y2="56" />
+        <line x1="56" y1="144" x2="39" y2="161" />
+      </g>
+    </svg>
+    <div class="wrap cta-band-inner">
+      <div class="cta-band-copy">
+        <h2>Your LIPA bill only goes up. The sun is free.</h2>
+        <p>Get a free quote with the full payback math — same business day, no salesperson visit required.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a class="btn btn-dark" href="#contact">Get a free quote</a>
+        <a class="btn btn-band-ghost" href={'tel:' + phoneTel}><Icon name="phone" size={16} /> {phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
   <section class="faq">
     <div class="wrap">
       <p class="section-eyebrow">FAQ</p>
@@ -233,36 +305,15 @@ const faqs = [
         Solar's a 25-year decision. Pick an installer who's still around in year 24.
       </p>
       <div class="trust-grid">
-        <article class="trust-card">
-          <div class="trust-icon">★</div>
-          <h3>NABCEP Certified</h3>
-          <p>Every install supervised by a NABCEP Certified PV Installation Professional — the industry's gold-standard credential.</p>
-        </article>
-        <article class="trust-card">
-          <div class="trust-icon">✓</div>
-          <h3>NYSERDA NY-Sun Installer</h3>
-          <p>Quality Solar Installer track. You get the per-watt NY-Sun rebate baked into your quote, applied automatically.</p>
-        </article>
-        <article class="trust-card">
-          <div class="trust-icon">⚡</div>
-          <h3>Tesla + Enphase Certified</h3>
-          <p>Tesla Powerwall Certified Installer · Enphase Platinum Installer. Manufacturer-direct warranty coverage on both ecosystems.</p>
-        </article>
-        <article class="trust-card">
-          <div class="trust-icon">A+</div>
-          <h3>BBB A+ Rated</h3>
-          <p>4.9 / 5 across 127 installs. Licensed and insured in Suffolk + Nassau Counties — license number on every contract.</p>
-        </article>
-        <article class="trust-card">
-          <div class="trust-icon">25</div>
-          <h3>25-Year Panel Warranty</h3>
-          <p>Manufacturer power-production warranty on every panel + workmanship and roof-penetration warranty from us directly.</p>
-        </article>
-        <article class="trust-card">
-          <div class="trust-icon">→</div>
-          <h3>No Subcontractors</h3>
-          <p>The crew that quotes the install is the crew on your roof. One team, one warranty, one phone number for the next 25 years.</p>
-        </article>
+        {trustCards.map(function (c) {
+          return (
+            <article class="trust-card">
+              <div class="trust-icon"><Icon name={c.glyph} size={22} /></div>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </article>
+          );
+        })}
       </div>
       <p class="trust-foot">
         <a href="/about/">Read more about who we are →</a>

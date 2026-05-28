@@ -1,0 +1,73 @@
+---
+/**
+ * Logo — sun-rising-over-a-roofline badge mark + wordmark.
+ * Solar (the sun + rays) over home (the roofline) = residential solar.
+ *
+ * Props:
+ *   size       — badge px size (default 38)
+ *   wordmark   — show the text wordmark beside the mark (default true)
+ *   variant    — "dark" (wordmark in --text, for light headers) or
+ *                "light" (wordmark in white, for dark footers)
+ */
+interface Props {
+  size?: number;
+  wordmark?: boolean;
+  variant?: 'dark' | 'light';
+}
+const { size = 38, wordmark = true, variant = 'dark' } = Astro.props;
+
+const business = import.meta.env.PUBLIC_BUSINESS_NAME || 'Huntington Solar Co';
+// Split "Huntington Solar Co" → ["Huntington", "Solar Co"] so "Solar" can carry the accent.
+const words = business.split(' ');
+const lead = words[0];
+const rest = words.slice(1).join(' ');
+const uid = 'lg' + Math.random().toString(36).slice(2, 8);
+---
+
+<span class={'logo logo-' + variant} aria-label={business}>
+  <svg
+    class="logo-mark"
+    width={size}
+    height={size}
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id={uid} x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#F8B945" />
+        <stop offset="1" stop-color="#E08A0B" />
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="48" height="48" rx="12" fill={'url(#' + uid + ')'} />
+    {/* sun core */}
+    <circle cx="24" cy="20" r="6.5" fill="#ffffff" />
+    {/* sun rays */}
+    <g stroke="#ffffff" stroke-width="2.2" stroke-linecap="round">
+      <line x1="24" y1="6.5" x2="24" y2="9.5" />
+      <line x1="13.4" y1="9.4" x2="15.5" y2="11.5" />
+      <line x1="34.6" y1="9.4" x2="32.5" y2="11.5" />
+      <line x1="9" y1="20" x2="12" y2="20" />
+      <line x1="39" y1="20" x2="36" y2="20" />
+    </g>
+    {/* roofline */}
+    <path
+      d="M8 33 L24 24 L40 33"
+      stroke="#ffffff"
+      stroke-width="2.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+      opacity="0.95"
+    />
+    <path d="M11 33 H37" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" opacity="0.55" />
+  </svg>
+  {wordmark && (
+    <span class="logo-word">
+      <span class="logo-lead">{lead}</span>
+      <span class="logo-accent">{rest}</span>
+    </span>
+  )}
+</span>
