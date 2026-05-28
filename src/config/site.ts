@@ -8,6 +8,15 @@
  * fall back gracefully if a phantom hasn't filled the rich fields yet
  * — keeps the model phantom-repeatable.
  */
+/**
+ * Per-site analytics. GA4 Measurement IDs are public (they're rendered
+ * into the page HTML), so committing one here is safe. The env var
+ * PUBLIC_GA4_MEASUREMENT_ID overrides this when set. SWAP per phantom.
+ */
+export const analytics = {
+  ga4MeasurementId: 'G-D1C79CBW3M',
+};
+
 export type BodySection = {
   heading: string;
   paragraphs: string[];

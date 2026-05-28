@@ -1,5 +1,8 @@
 ---
-const id = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID;
+import { analytics } from '../config/site';
+// Env var wins (per-deploy override); otherwise fall back to the site's
+// committed Measurement ID. GA4 IDs are public, so this is safe to commit.
+const id = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || analytics.ga4MeasurementId;
 ---
 
 {
