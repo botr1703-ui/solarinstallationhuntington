@@ -191,7 +191,7 @@ const faqs = [
     <div class="wrap">
       <p class="section-eyebrow">What we install</p>
       <h2>Residential, commercial, battery storage, and everything in between.</h2>
-      <div class="grid grid-services">
+      <div class="grid grid-services home-services">
         {services.map(function (s, i) {
           const glyph = serviceGlyphs[i] || 'sun';
           return (
@@ -211,7 +211,7 @@ const faqs = [
     <div class="wrap">
       <p class="section-eyebrow">Suffolk County coverage</p>
       <h2>Local crews. Same-day site visits. North-shore based.</h2>
-      <div class="area-grid">
+      <div class="area-grid home-areas">
         {areas.map(function (a) {
           return (
             <a class="area-chip" href={'/locations/' + a.slug + '/'}>

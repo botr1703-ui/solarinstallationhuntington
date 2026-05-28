@@ -512,6 +512,15 @@ footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-directi
 .nearby { padding: 3rem 0; background: var(--bg-soft); text-align: center; }
 .nearby-list { color: var(--text-2); font-size: 0.98rem; max-width: 60ch; margin: 0 auto; }
 
+/* === Homepage even grids (no orphan card on a new row) === */
+/* 5 service cards: 1 col mobile -> 3 col tablet -> 5 col (single row) desktop */
+.home-services { grid-template-columns: 1fr; }
+@media (min-width: 640px) { .home-services { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1080px) { .home-services { grid-template-columns: repeat(5, 1fr); } }
+/* 6 area chips: 2 col mobile -> 3 col desktop (both divide evenly) */
+.home-areas { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 720px) { .home-areas { grid-template-columns: repeat(3, 1fr); } }
+
 /* === Icon base === */
 .icon { display: inline-block; vertical-align: middle; flex: 0 0 auto; }
 
