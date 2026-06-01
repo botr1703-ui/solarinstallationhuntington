@@ -57,3 +57,6 @@ const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION;
 {jsonLd && (
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 )}
+{jsonLdExtra && (
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdExtra)} />
+)}
